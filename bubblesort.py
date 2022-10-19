@@ -1,62 +1,27 @@
-# Python program for implementation of Quicksort Sort
-
-# This implementation utilizes pivot as the last element in the nums list
-# It has a pointer to keep track of the elements smaller than the pivot
-# At the very end of partition() function, the pointer is swapped with the pivot
-# to come up with a "sorted" nums relative to the pivot
+# Insertion sort in Python
 
 
-# Function to find the partition position
-def partition(array, low, high):
+def insertionSort(array):
 
-    # choose the rightmost element as pivot
-    pivot = array[high]
+    for step in range(1, len(array)):
+        key = array[step]
+        j = step - 1
+        
+        # Compare key with each element on the left of it until an element smaller than it is found
+        # For descending order, change key<array[j] to key>array[j].        
+        while j >= 0 and key < array[j]:
+            array[j + 1] = array[j]
+            j = j - 1
+        
+        # Place key at after the element just smaller than it.
+        array[j + 1] = key
+ 
+# Driver code to test above
+arr = [64, 34, 25, 12, 22, 11, 90]
+ 
+insertionSort(arr)
+ 
+print("Sorted array is:")
+for i in range(len(arr)):
+    print("% d" % arr[i], end=" ")
 
-    # pointer for greater element
-    i = low - 1
-
-    # traverse through all elements
-    # compare each element with pivot
-    for j in range(low, high):
-        if array[j] <= pivot:
-
-            # If element smaller than pivot is found
-            # swap it with the greater element pointed by i
-            i = i + 1
-
-            # Swapping element at i with element at j
-            (array[i], array[j]) = (array[j], array[i])
-
-    # Swap the pivot element with the greater element specified by i
-    (array[i + 1], array[high]) = (array[high], array[i + 1])
-
-    # Return the position from where partition is done
-    return i + 1
-
-# function to perform quicksort
-
-
-def quickSort(array, low, high):
-    if low < high:
-
-        # Find pivot element such that
-        # element smaller than pivot are on the left
-        # element greater than pivot are on the right
-        pi = partition(array, low, high)
-
-        # Recursive call on the left of pivot
-        quickSort(array, low, pi - 1)
-
-        # Recursive call on the right of pivot
-        quickSort(array, pi + 1, high)
-
-data = [64, 34, 25, 12, 22, 11, 90]
-print("Unsorted Array")
-print(data)
-
-size = len(data)
-
-quickSort(data, 0, size - 1)
-
-print('Sorted Array in Ascending Order:')
-print(data)
