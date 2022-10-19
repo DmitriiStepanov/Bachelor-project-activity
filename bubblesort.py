@@ -1,27 +1,26 @@
-# Insertion sort in Python
+import math
+
+def ShellSort(array):
+    n = len(array)
+    k = int(math.log2(n))
+    interval = 2 ** k - 1
+    while interval > 0:
+        for i in range(interval, n):
+            temp = array[i]
+            j = i
+            while j >= interval and array[j - interval] > temp:
+                array[j] = array[j - interval]
+                j -= interval
+            array[j] = temp
+        k -= 1
+        interval = 2 ** k - 1
+    return array
 
 
-def insertionSort(array):
-
-    for step in range(1, len(array)):
-        key = array[step]
-        j = step - 1
-        
-        # Compare key with each element on the left of it until an element smaller than it is found
-        # For descending order, change key<array[j] to key>array[j].        
-        while j >= 0 and key < array[j]:
-            array[j + 1] = array[j]
-            j = j - 1
-        
-        # Place key at after the element just smaller than it.
-        array[j + 1] = key
- 
-# Driver code to test above
 arr = [64, 34, 25, 12, 22, 11, 90]
- 
-insertionSort(arr)
- 
+
+ShellSort(arr)
+
 print("Sorted array is:")
 for i in range(len(arr)):
     print("% d" % arr[i], end=" ")
-
